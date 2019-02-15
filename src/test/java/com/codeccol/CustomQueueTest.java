@@ -23,9 +23,30 @@ class CustomQueueTest {
     @Test
     public void getCustomQueueSize(){
         customQueue.enqueue("string", 1);
-        customQueue.enqueue("string", 2);
-        customQueue.enqueue("string", 3);
+        customQueue.enqueue("string", 1);
+        customQueue.enqueue("string", 1);
         assertEquals(3, customQueue.queueSize());
+    }
+
+    @Test
+    public void getCustomQueueSizeWithPrioritizedStrings(){
+        customQueue.enqueue("string1", 3);
+        customQueue.enqueue("string2", 1);
+        customQueue.enqueue("string3", 2);
+
+        assertEquals(3, customQueue.queueSize());
+    }
+
+    @Test
+    public void checkPrioritizedStringsOrder() throws QueueEmptyException {
+        customQueue.enqueue("string1", 3);
+        customQueue.enqueue("string2", 1);
+        customQueue.enqueue("string3", 2);
+
+        assertEquals("string1", customQueue.dequeue());
+        assertEquals("string3", customQueue.dequeue());
+        assertEquals("string2", customQueue.dequeue());
+
     }
 
     @Test
@@ -33,7 +54,7 @@ class CustomQueueTest {
         customQueue.enqueue("string1", 1);
         //customQueue.enqueue("string2", 2);
         customQueue.enqueue("string2", 2);
-        assertEquals("string1", customQueue.dequeue());
+        assertEquals("string2", customQueue.dequeue());
         assertEquals(1, customQueue.queueSize());
 
     }
@@ -42,7 +63,7 @@ class CustomQueueTest {
     public void checkIfUserCanPeekAString() throws QueueEmptyException {
         customQueue.enqueue("string1", 1);
         customQueue.enqueue("string2", 2);
-        assertEquals("string1", customQueue.peek());
+        assertEquals("string2", customQueue.peek());
         assertEquals(2, customQueue.queueSize());
     }
 

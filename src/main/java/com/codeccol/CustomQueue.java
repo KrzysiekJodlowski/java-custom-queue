@@ -17,14 +17,34 @@ public class CustomQueue {
         if (head == null) {
             this.head = newNode;
             this.tail = newNode;
+        } else if (this.head.getNextNode() == null) {
+            if (this.head.getPriority() < priority) {
+                Node headNode = this.head;
+                this.head = newNode;
+                newNode.setNextNode(headNode);
+                this.tail = headNode;
+            } else {
+                this.head.setNextNode(newNode);
+                this.tail = newNode;
+            }
         } else {
             Node current = this.head;
+            boolean placeForNodeWasInside = false;
             while (current.getNextNode() != null) {
+                if (current.getNextNode().getPriority() < priority) {
+
+                    newNode.setNextNode(current.getNextNode());
+                    current.setNextNode(newNode);
+                    placeForNodeWasInside = true;
+                    break;
+                }
                 current = current.getNextNode();
             }
-            current.setNextNode(newNode);
+            if (!placeForNodeWasInside) {
+                current.setNextNode(newNode);
+                this.tail = newNode;
+            }
         }
-        this.tail = newNode;
     }
 
     public String peek() throws QueueEmptyException {
@@ -65,5 +85,17 @@ public class CustomQueue {
 
     public boolean isEmpty() {
         return (this.head == null);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Node current = this.head;
+        while (current.getNextNode() != null) {
+            stringBuilder.append(current.getValue());
+            current = current.getNextNode();
+        }
+        return stringBuilder.toString();
     }
 }
