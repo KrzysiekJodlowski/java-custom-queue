@@ -30,19 +30,19 @@ class CustomQueueTest {
 
     @Test
     public void checkIfUserCanDequeueAString() throws QueueEmptyException {
-        customQueue.enqueue("string", 1);
+        customQueue.enqueue("string1", 1);
         //customQueue.enqueue("string2", 2);
-        customQueue.enqueue("string3", 2);
-        assertEquals("string3", customQueue.dequeue());
+        customQueue.enqueue("string2", 2);
+        assertEquals("string1", customQueue.dequeue());
         assertEquals(1, customQueue.queueSize());
 
     }
 
     @Test
     public void checkIfUserCanPeekAString() throws QueueEmptyException {
-        customQueue.enqueue("string", 1);
+        customQueue.enqueue("string1", 1);
         customQueue.enqueue("string2", 2);
-        assertEquals("string2", customQueue.peek());
+        assertEquals("string1", customQueue.peek());
         assertEquals(2, customQueue.queueSize());
     }
 

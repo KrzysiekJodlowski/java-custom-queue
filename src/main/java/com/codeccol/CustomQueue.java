@@ -1,12 +1,10 @@
 package com.codeccol;
 
 
-import java.util.Optional;
-
 public class CustomQueue {
 
-private Node head;
-    private Node tail;
+    private Node head;
+    private Node tail;  // redundant?
 
     public CustomQueue() {
         this.head = null;
@@ -29,33 +27,25 @@ private Node head;
         this.tail = newNode;
     }
 
-    public String peek() throws QueueEmptyException {  // error handling when q empty
+    public String peek() throws QueueEmptyException {
         if (this.head == null) {
             throw new QueueEmptyException("Can't peek from empty queue");
         }
-        return this.tail.getValue();
+        return this.head.getValue();
     }
 
-    public String dequeue() throws QueueEmptyException {   // error handling when q empty
-        String tailString = null;
+    public String dequeue() throws QueueEmptyException {
 
         if (this.head == null) {
             throw new QueueEmptyException("Can't dequeue from empty queue");
-        } else if (this.head.getNextNode() == null) {
-            tailString = this.head.getValue();
-            this.head = null;
-        } else if (this.head.getNextNode().getNextNode() == null) {
-            Node secondNode = this.head.getNextNode();
-            tailString = secondNode.getValue();
-            this.head.setNextNode(null);
-        } else {
-            Node current = this.head;
+        }
+        String tailString = this.head.getValue();
 
-            while (current.getNextNode().getNextNode() != null) {
-                current = current.getNextNode();
-            }
-            tailString = current.getNextNode().getValue();
-            current.setNextNode(null);
+        if (this.head.getNextNode() == null) {
+            this.head = null;
+            this.tail = null;
+        } else {
+            this.head = this.head.getNextNode();
         }
         return tailString;
     }
